@@ -1,0 +1,227 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core" xmlns:u="sap.uxap"
+	xmlns:layout="sap.ui.layout" controllerName="dksh.connectclient.InventoryExp.controller.inventory" displayBlock="true">
+	<Page id="page" class="sapUiSizeCompact" showHeader="false">
+		<content>
+			<IconTabBar expandable="false" id="ID_TAB_BAR_PROV_APP" expanded="true" select="onTabSelection" showOverflowSelectList="true">
+				<items>
+					<!--for Tracking Details-->
+					<!--<IconTabFilter key="KeySelCust" text="{i18n>SelectReportTitle}">-->
+					<!--	<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanL="4" labelSpanM="4" columnsL="1" columnsM="1" emptySpanL="5" emptySpanM="5" class="sapUiSizeCompact">-->
+					<!--		<f:content>-->
+					<!--			<Label text="{i18n>Report}" design="Bold"/>-->
+					<!--			<ComboBox placeholder="" change="onReportSelection" showValueStateMessage="false">-->
+					<!--<core:Item key="keyATPOverviewEnquiry" text="{i18n>ATPOverview}"/>-->
+					<!--<core:Item key="keyEndingStockView" text="{i18n>EndingStock}"/>-->
+					<!--				<core:Item key="keyExpiryStockView" text="{i18n>ExpiryStock}"/>-->
+					<!--<core:Item key="keyMat.Movement" text="{i18n>MaterialMovement}"/>-->
+					<!--<core:Item key="keyStkLotView" text="{i18n>StockLotandControlList}"/>-->
+					<!--			</ComboBox>-->
+					<!--		</f:content>-->
+					<!--	</f:SimpleForm>-->
+					<!--</IconTabFilter>-->
+					<!--ATP OVERVIEW-->
+					<!--ENDING STOCK-->
+					<!--EXPIRY STOCK-->
+					<IconTabFilter key="keyExpiryStockView" text="{i18n>ExpiryStock}">
+						<OverflowToolbar class="dkshToolbarStyle customTitle">
+							<Label text="{i18n>Search}" design="Bold"/>
+							<ToolbarSpacer/>
+							<Button text="{i18n>CollapseSearch}" tooltip="{i18n>CollapseSearch}" press="onPressCollapse" visible="{baseModel>/CollapseVisiblity}"/>
+							<Button text="{i18n>ExpandSearch}" tooltip="{i18n>ExpandSearch}" press="onPressOpen" visible="{baseModel>/openVisiblity}"/>
+						</OverflowToolbar>
+						<!--<core:Fragment fragmentName="incture.com.Inventory.Fragments.ExpiryStock" type="XML"/>-->
+						<VBox>
+							<f:SimpleForm minWidth="1024" layout="ResponsiveGridLayout" maxContainerCols="2" editable="true" labelSpanL="4" labelSpanM="4"
+								emptySpanL="1" emptySpanM="1" columnsL="2" columnsM="2" visible="{baseModel>/SearchVisiblity}">
+								<f:content>
+									<core:Title/>
+									<Label text="{i18n>Plant}" design="Bold" required="true"/>
+									<MultiInput value="{baseModel>/plantFrom}" placeholder="{i18n>EnterPlant}" showValueHelp="true" valueHelpRequest="valueHelpRequestPlant"
+										valueState="{baseModel>/EndingStckplantValueState}" tokenUpdate="onDeleteEndStckPlant" id="ExpStckPlantFromId"/>
+									<Label text="{i18n>SLoc}" design="Bold"/>
+									<!--<HBox alignContent="SpaceAround">-->
+									<MultiInput value="{baseModel>/SLocFrom}" tokenUpdate="onDeleteStoLoc" placeholder="{i18n>From}" showValueHelp="true"
+										valueHelpRequest="valueHelpRequestStoLoc" id="ExpStckSLocFromId"/>
+									<MultiInput value="{baseModel>/SLocTo}" placeholder="{i18n>To}" showValueHelp="true" valueHelpRequest="valueHelpRequestStoLoc"
+										enabled="{baseModel>/enableSLocTo}" id="ExpStckSLocToId" tokenUpdate="onDeleteStoLoc"/>
+									<!--</HBox>-->
+									<Label text="{i18n>MaterialGroup}" design="Bold" required="true"/>
+									<!--<HBox alignContent="SpaceAround">-->
+									<MultiInput id="ExpStckMatGrpFromId" value="{baseModel>/matGrpFrom}" tokenUpdate="onDeleteMatGrp" placeholder="{i18n>From}"
+										showValueHelp="true" valueHelpRequest="valueHelpRequestMaterialGrp" valueState="{baseModel>/matGrpValueState}"/>
+									<MultiInput value="{baseModel>/matGrpTo}" placeholder="{i18n>To}" showValueHelp="true" valueHelpRequest="valueHelpRequestMaterialGrp"
+										enabled="{baseModel>/enablematGrpTo}" id="ExpStckMatGrpToId" tokenUpdate="onDeleteMatGrp"/>
+									<!--</HBox>-->
+									<Label text="{i18n>VendorMat}" design="Bold"/>
+									<MultiInput id="ExpStckVenMatFromId" placeholder="{i18n>From}" showValueHelp="false" tokenUpdate="onDeleteVenMat"
+										change="onChangeVenMatFrom" value="{baseModel>/vendMatFrom}"/>
+									<MultiInput id="ExpStckVenMatToId" placeholder="{i18n>To}" showValueHelp="false" tokenUpdate="onDeleteVenMat" change="onChangeVenMatFrom"
+										enabled="{baseModel>/enableVendorMat}" value="{baseModel>/vendMatTo}"/>
+									<Label/>
+									<RadioButton text="{i18n>SalesUnit}" groupName="expiryStockGrp" select="onChangeSalesUnit" selected="{baseModel>/salesUnit}"/>
+									<RadioButton text="{i18n>BaseUnit}" groupName="expiryStockGrp" select="onChangeBaseUnit" selected="{baseModel>/baseUnit}"/>
+									<core:Title/>
+									<Label text="{i18n>MaterialGroup4}" design="Bold"/>
+									<!--<HBox alignContent="SpaceAround">-->
+									<MultiInput id="ExpStckMatGrp4FromId" value="{baseModel>/matGrp4From}" placeholder="{i18n>From}" showValueHelp="true"
+										valueHelpRequest="valueHelpRequestMaterialGrp4" tokenUpdate="onDeleteMatGrp4"/>
+									<MultiInput id="ExpStckMatGrp4ToId" placeholder="{i18n>To}" showValueHelp="true" valueHelpRequest="valueHelpRequestMaterialGrp4"
+										enabled="{baseModel>/enablematGrp4To}" change="onMaterialToChange" tokenUpdate="onDeleteMatGrp4" value="{baseModel>/matGrp4To}"/>
+									<!--</HBox>-->
+									<Label text="{i18n>Material}" design="Bold"/>
+									<!--<HBox alignContent="SpaceAround">-->
+									<MultiInput placeholder="{i18n>From}" showValueHelp="false" id="ExpStckMatFromId" tokenUpdate="onMaterialFromDelete"
+										change="onMaterialFromChange" value="{baseModel>/matFrom}"/>
+									<MultiInput placeholder="{i18n>To}" showValueHelp="false" id="ExpStckMatToId" enabled="{baseModel>/enablematTo}"
+										change="onMaterialFromChange" tokenUpdate="onMaterialFromDelete" value="{baseModel>/matTo}"/>
+									<!--</HBox>-->
+									<Label/>
+									<CheckBox text="{i18n>Unrestricted}" select="onChangeUnrestricted" selected="{baseModel>/unrestricted}"/>
+									<CheckBox text="{i18n>QI}" select="onChangeInspection" selected="{baseModel>/QI}"/>
+									<Label/>
+									<CheckBox text="{i18n>Blocked}" select="onChangeBlocked" selected="{baseModel>/blocked}"/>
+									<CheckBox text="{i18n>ExcludeFDAStock}" select="onChangeExcFDAStck" selected="{baseModel>/excludeFda}"/>
+									<Label/>
+									<CheckBox text="{i18n>SerialNo}" select="oncheckSelect" selected="{baseModel>/serialNo}"/>
+									<Label/>
+									<Button text="{i18n>Search}" icon="sap-icon://search" press="expiryStockSearch" type="Accept"/>
+									<Button text="{i18n>Clear}" icon="sap-icon://refresh" press="clearTabData" type="Reject"/>
+								</f:content>
+							</f:SimpleForm>
+							<Table alternateRowColors="true" class="sapUiSizeCompact" items="{expiryStckTableModel>/results}" popinLayout="GridSmall" growing="true"
+								growingThreshold="10" growingScrollToLoad="true" id="expiryStockTableId" sticky="ColumnHeaders">
+								<headerToolbar>
+									<Toolbar>
+										<Label text="{expiryStckTableModel>/dataLength}" design="Bold"/>
+										<ToolbarSpacer/>
+										<SearchField width="30%" search="onSearchExpiryStock" liveChange="onSearchExpiryStock"/>
+										<Button text="{i18n>Export}" icon="sap-icon://download" press="onExportExpiryStock" type="Emphasized"/>
+										<Button icon="sap-icon://action-settings" press="onPressPersonalization"/>
+									</Toolbar>
+								</headerToolbar>
+								<columns>
+									<Column minScreenWidth="Small" demandPopin="false" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationData/userPersonaDto/0/status}">
+										<Label text="{i18n>MaterialGroup}" design="Bold" tooltip="{i18n>MaterialGroup}"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="false" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationData/userPersonaDto/1/status}">
+										<Label text="{i18n>MaterialGroup4}" design="Bold" tooltip="{i18n>MaterialGroup4}"/>
+									</Column>
+									<Column minScreenWidth="XSmall" demandPopin="true" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationData/userPersonaDto/2/status}">
+										<Label text="{i18n>Material}" design="Bold" tooltip="{i18n>Material}"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="false" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationData/userPersonaDto/3/status}">
+										<Label text="{i18n>VendorMat}" design="Bold" tooltip="{i18n>VendorMat}"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="false" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationData/userPersonaDto/4/status}">
+										<Label text="{i18n>Batch}" design="Bold" tooltip="{i18n>Batch}"/>
+									</Column>
+									<Column minScreenWidth="XSmall" demandPopin="true" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationData/userPersonaDto/5/status}">
+										<Label text="{i18n>LongBatch}" design="Bold" tooltip="{i18n>LongBatch}"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="false" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationData/userPersonaDto/6/status}">
+										<Label text="{i18n>Value}" design="Bold" tooltip="{i18n>Value}"/>
+									</Column>
+									<Column minScreenWidth="XSmall" demandPopin="true" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationData/userPersonaDto/7/status}">
+										<Label text="{i18n>RSLDays}" design="Bold" tooltip="{i18n>RSLDays}"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="false" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationData/userPersonaDto/8/status}">
+										<Label text="{i18n>ExpDate}" design="Bold" tooltip="{i18n>ExpDate}"/></Column>
+									<Column minScreenWidth="Small" demandPopin="false" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationData/userPersonaDto/9/status}">
+										<Label text="{i18n>ManuDate}" design="Bold" tooltip="{i18n>ManuDate}"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="false" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationData/userPersonaDto/10/status}">
+										<Label text="{i18n>Unit}" design="Bold" tooltip="{i18n>Unit}"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationData/userPersonaDto/11/status}">
+										<Label text="{i18n>SLoc}" design="Bold" tooltip="{i18n>SLoc}"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationData/userPersonaDto/11/status}">
+										<Label text="{i18n>SLocDesc}" design="Bold" tooltip="{i18n>SLocDesc}"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="false" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationData/userPersonaDto/12/status}">
+										<Label text="{i18n>Expired}" design="Bold" tooltip="{i18n>Expired}"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="false" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationData/userPersonaDto/13/status}">
+										<Label text="{i18n>3Months}" design="Bold" tooltip="{i18n>3Months}"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="false" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationData/userPersonaDto/14/status}">
+										<Label text="{i18n>6Months}" design="Bold" tooltip="{i18n>6Months}"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="false" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationData/userPersonaDto/15/status}">
+										<Label text="{i18n>9Months}" design="Bold" tooltip="{i18n>9Months}"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="false" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationData/userPersonaDto/16/status}">
+										<Label text="{i18n>12Months}" design="Bold" tooltip="{i18n>12Months}"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="false" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationData/userPersonaDto/17/status}">
+										<Label text="{i18n>15Months}" design="Bold" tooltip="{i18n>15Months}"/>
+									</Column>
+									<Column minScreenWidth="Small" demandPopin="false" popinDisplay="Inline"
+										visible="{PersonalizationModel>/personalizationData/userPersonaDto/18/status}">
+										<Label text="{i18n>18Months}" design="Bold" tooltip="{i18n>18Months}"/>
+									</Column>
+									<Column minScreenWidth="Desktop" demandPopin="true" popinDisplay="Inline"
+										visible="{tabPersonalizationModel>/personalizationData/userPersonaDto/19/status}">
+										<Label text="{i18n>SerialNo}" design="Bold" tooltip="{i18n>SerialNo}"/>
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem type="Navigation" press="onPressDetailExpStk">
+										<Text
+											text=" {parts:[{path:'expiryStckTableModel>materialGroup'},{path:'expiryStckTableModel&gt;matGroupDesc'}],formatter:'.formatter.concatenateStrings'}"
+											wrapping="true"/>
+										<Text
+											text=" {parts:[{path:'expiryStckTableModel>materialGroup4'},{path:'expiryStckTableModel&gt;matGroup4Desc'}],formatter:'.formatter.concatenateStrings'}"
+											wrapping="true"/>
+										<Text
+											text=" {parts:[{path:'expiryStckTableModel>materialNum'},{path:'expiryStckTableModel&gt;materialDesc'}],formatter:'.formatter.concatenateStrings'}"/>
+										<Text text="{expiryStckTableModel>prodInsMemo}"/>
+										<Text text="{expiryStckTableModel>batch}"/>
+										<Text text="{expiryStckTableModel>characteristicValue}"/>
+										<Text text="{expiryStckTableModel>rate}"/>
+										<Text text="{expiryStckTableModel>rslDays}"/>
+										<Text text="{path:'expiryStckTableModel>shelflLifeDate',formatter:'.formatter.date'}"/>
+										<Text text="{path:'expiryStckTableModel>manufDate',formatter:'.formatter.manufDate'}"/>
+										<Text text="{expiryStckTableModel>baseUOM}"/>
+										<Text text="{expiryStckTableModel>storageLocation}"/>
+										<Text text="{expiryStckTableModel>storageLocationdesc}"/>
+										<Text text="{expiryStckTableModel>expired}"/>
+										<Text text="{expiryStckTableModel>expired3}"/>
+										<Text text="{expiryStckTableModel>expired6}"/>
+										<Text text="{expiryStckTableModel>expired9}"/>
+										<Text text="{expiryStckTableModel>expired12}"/>
+										<Text text="{expiryStckTableModel>expired15}"/>
+										<Text text="{expiryStckTableModel>expired18}"/>
+										<Text text="{expiryStckTableModel>serialNum}"/>
+									</ColumnListItem>
+								</items>
+							</Table>
+						</VBox>
+					</IconTabFilter>
+					<!--MATERIAL MOVEMENT-->
+					<!--STOCK & LOT-->
+					<!--STOCK & LOT-->
+				</items>
+			</IconTabBar>
+		</content>
+	</Page>
+</mvc:View>
